@@ -15,6 +15,7 @@ const NAV = [
   { href: '/admin/projects', label: '과제' },
   { href: '/admin/events', label: '행사' },
   { href: '/admin/notices', label: '공지' },
+  { href: '/admin/diagnostics', label: '진단' },
 ];
 
 export default async function AdminLayout({
