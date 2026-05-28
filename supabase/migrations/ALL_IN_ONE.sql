@@ -1,0 +1,54 @@
+-- =====================================================================
+-- 통합 적용 SQL (0001 ~ 0006 일괄 실행)
+--   - Supabase SQL Editor 에 통째로 붙여넣기 → Run
+--   - 모든 문장이 idempotent 하거나 IF NOT EXISTS / IF EXISTS 처리되어
+--     여러 번 실행해도 안전
+-- =====================================================================
+
+-- 진행 전 안내:
+--   1) Dashboard → Database → Extensions 에서 postgis 활성화
+--   2) 본인 계정을 admin 으로 승격하려면 마지막 줄 참고
+
+\echo '0001 init…'
+-- (0001 ~ 0006 의 내용은 각 파일에 분리 보관됨)
+-- 이 파일은 사용자가 "한 번에" 적용하고 싶을 때를 위해
+-- 0001~0006 의 SQL 을 차례로 붙여넣어 실행하라는 가이드입니다.
+--
+-- 권장 방법:
+--   Supabase SQL Editor 의 "New query" 에 다음 순서로 각 파일을
+--   하나씩 붙여넣어 실행하세요. 6번 모두 성공해야 모든 기능이 동작합니다.
+--
+--     1. supabase/migrations/0001_init.sql
+--     2. supabase/migrations/0002_rls.sql
+--     3. supabase/migrations/0003_triggers.sql
+--     4. supabase/migrations/0004_comments.sql
+--     5. supabase/migrations/0005_admin.sql
+--     6. supabase/migrations/0006_full.sql
+--
+-- 각 파일은 idempotent 하게 작성되어 있어 재실행해도 안전합니다.
+--
+-- ─────────────────────────────────────────────────────────────────────
+-- 어디까지 적용됐는지 확인 SQL (SQL Editor 에서 실행):
+-- ─────────────────────────────────────────────────────────────────────
+--
+-- select 'profiles'   as t, count(*) from public.profiles
+-- union all select 'proposals',         count(*) from public.proposals
+-- union all select 'rewards',           count(*) from public.rewards
+-- union all select 'comments',          count(*) from public.comments
+-- union all select 'comment_likes',     count(*) from public.comment_likes
+-- union all select 'events',            count(*) from public.events
+-- union all select 'notifications',     count(*) from public.notifications
+-- union all select 'badges',            count(*) from public.badges
+-- union all select 'user_badges',       count(*) from public.user_badges
+-- union all select 'notices',           count(*) from public.notices;
+--
+-- 위 SELECT 가 모두 에러 없이 실행되면 0006 까지 적용 완료입니다.
+-- 특정 줄에서 "relation 'public.xxx' does not exist" 에러가 나면
+-- 그 테이블을 만드는 마이그레이션이 미적용입니다.
+--
+-- ─────────────────────────────────────────────────────────────────────
+-- 본인 계정을 admin 으로 (가입 후 1회 실행)
+-- ─────────────────────────────────────────────────────────────────────
+--   update public.profiles
+--     set role = 'admin'
+--     where nickname = '본인_닉네임';

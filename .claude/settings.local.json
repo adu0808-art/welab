@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir D:\\\\Cluade\\\\WeLAB)",
+      "Bash(dir D:\\\\Cluade\\\\WyLab)"
+    ]
+  }
+}
