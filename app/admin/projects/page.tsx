@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { formatDate, formatNumber } from '@/lib/utils';
 import { StageSelector } from './_components/StageSelector';
 import type { Project } from '@/lib/db/types';

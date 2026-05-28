@@ -16,6 +16,16 @@ export default async function NotificationsPage() {
   const profile = await getCurrentProfile();
   if (!profile) redirect('/login?next=/mypage/notifications');
 
+  type Row = {
+    id: string;
+    kind: string;
+    title: string;
+    body: string | null;
+    href: string | null;
+    read_at: string | null;
+    created_at: string;
+  };
+
   const supabase = await createClient();
   const { data } = await supabase
     .from('notifications')
@@ -23,7 +33,7 @@ export default async function NotificationsPage() {
     .eq('user_id', profile.id)
     .order('created_at', { ascending: false })
     .limit(50);
-  const items = data ?? [];
+  const items = (data ?? []) as unknown as Row[];
   const unread = items.filter((n) => !n.read_at).length;
 
   return (
@@ -31,7 +41,12 @@ export default async function NotificationsPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold text-brand-primary sm:text-2xl">알림</h1>
         {unread > 0 && (
-          <form action={markAllRead}>
+          <form
+            action={async () => {
+              'use server';
+              await markAllRead();
+            }}
+          >
             <button
               type="submit"
               className="text-sm font-medium text-brand-primary hover:underline"

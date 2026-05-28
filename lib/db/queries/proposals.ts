@@ -52,8 +52,8 @@ export async function listProposals(
 
   // 라이브 카운트 — 트리거가 없어도 정확히 표시되도록 N+1 없이 한 번에 조회
   const ids = rows.map((r) => r.id);
-  let upMap: Record<string, number> = {};
-  let cmMap: Record<string, number> = {};
+  const upMap: Record<string, number> = {};
+  const cmMap: Record<string, number> = {};
   if (ids.length > 0) {
     const [upRes, cmRes] = await Promise.all([
       supabase.from('proposal_upvotes').select('proposal_id').in('proposal_id', ids),
